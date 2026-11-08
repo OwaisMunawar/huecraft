@@ -108,3 +108,16 @@ final class NativeProposalEngine implements ProposalEngine {
     }
   }
 }
+
+final class DisabledProposalEngine implements ProposalEngine {
+  @override
+  String get label => 'No model';
+  @override
+  Future<bool> available() async => false;
+  @override
+  Future<int> choose(String brief, List<PaletteOption> options) async =>
+      throw const StudioFailure(
+        FailureCode.unavailable,
+        'This deterministic build uses Rules.',
+      );
+}
