@@ -1,0 +1,23 @@
+appId: com.owaismunawar.huecraft
+---
+- launchApp:
+    clearState: true
+- assertVisible: huecraft
+- scrollUntilVisible:
+    element:
+      text: Suggest with rules
+- tapOn: Suggest with rules
+- scrollUntilVisible:
+    element:
+      text: Apply to draft
+- tapOn: Apply to draft
+- scrollUntilVisible:
+    element:
+      text: Save revision
+- tapOn: Save revision
+- tapOn: Library
+- scrollUntilVisible:
+    element:
+      text: Preview JSON tokens
+- tapOn: Preview JSON tokens
+- assertVisible: JSON tokens
