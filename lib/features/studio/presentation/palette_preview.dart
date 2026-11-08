@@ -43,13 +43,15 @@ class PalettePreview extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Icon(
               Icons.blur_on_rounded,
               color: paintColor(palette[ColorRole.accent]),
             ),
-            const SizedBox(width: 8),
             Text(
               'NORTH / STUDIO',
               style: TextStyle(
@@ -59,8 +61,6 @@ class PalettePreview extends StatelessWidget {
                 letterSpacing: 1.4,
               ),
             ),
-            const Spacer(),
-            Icon(Icons.more_horiz, color: paintColor(palette[ColorRole.muted])),
           ],
         ),
         const SizedBox(height: 22),
@@ -84,7 +84,10 @@ class PalettePreview extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 22),
-        Row(
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 12),
@@ -101,21 +104,18 @@ class PalettePreview extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: paintColor(palette[ColorRole.surface]),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '01 / DRAFT',
-                  style: TextStyle(
-                    color: paintColor(palette[ColorRole.ink]),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: paintColor(palette[ColorRole.surface]),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '01 / DRAFT',
+                style: TextStyle(
+                  color: paintColor(palette[ColorRole.ink]),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

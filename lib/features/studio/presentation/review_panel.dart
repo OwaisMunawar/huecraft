@@ -35,19 +35,18 @@ class ReviewPanel extends StatelessWidget {
           const SizedBox(height: 16),
           for (final role in ColorRole.values)
             Padding(
-              padding: const EdgeInsets.only(bottom: 9),
-              child: Row(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      role.label,
-                      style: const TextStyle(color: muted, fontSize: 12),
-                    ),
+                  Text(
+                    role.label,
+                    style: const TextStyle(color: muted, fontSize: 12),
                   ),
                   Text(
                     '${state.palette[role].hex} → ${proposal.palette[role].hex}',
                     style: const TextStyle(
-                      fontSize: 11,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

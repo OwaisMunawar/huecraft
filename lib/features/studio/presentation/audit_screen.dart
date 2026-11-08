@@ -106,7 +106,10 @@ class AuditScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
-                Row(
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 8,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
                       '${rule.ratio(state.palette).toStringAsFixed(2)}:1',
@@ -116,7 +119,6 @@ class AuditScreen extends StatelessWidget {
                         letterSpacing: -1,
                       ),
                     ),
-                    const Spacer(),
                     Text(
                       '${rule.usage}\nRequires ${rule.minimum}:1',
                       textAlign: TextAlign.right,

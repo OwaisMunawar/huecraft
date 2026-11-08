@@ -24,67 +24,70 @@ class StudioScreen extends StatelessWidget {
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
+      isScrollControlled: true,
       builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(22),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Choose ${role.label.toLowerCase()}',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Choose ${role.label.toLowerCase()}',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  for (final color in sampleCatalog.colors)
-                    Semantics(
-                      label: 'Assign ${color.hex} to ${role.label}',
-                      button: true,
-                      child: InkWell(
-                        key: ValueKey('swatch-${color.hex}'),
-                        onTap: () {
-                          controller.assign(role, color);
-                          Navigator.pop(sheet);
-                        },
-                        borderRadius: BorderRadius.circular(14),
-                        child: SizedBox(
-                          width: 94,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 62,
-                                decoration: BoxDecoration(
-                                  color: paintColor(color),
-                                  borderRadius: BorderRadius.circular(14),
-                                  border: Border.all(
-                                    color: const Color(0xFFD8DED7),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    for (final color in sampleCatalog.colors)
+                      Semantics(
+                        label: 'Assign ${color.hex} to ${role.label}',
+                        button: true,
+                        child: InkWell(
+                          key: ValueKey('swatch-${color.hex}'),
+                          onTap: () {
+                            controller.assign(role, color);
+                            Navigator.pop(sheet);
+                          },
+                          borderRadius: BorderRadius.circular(14),
+                          child: SizedBox(
+                            width: 94,
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    color: paintColor(color),
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: const Color(0xFFD8DED7),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                color.hex,
-                                style: const TextStyle(
-                                  fontSize: 11,
-                                  color: ink,
+                                const SizedBox(height: 8),
+                                Text(
+                                  color.hex,
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: ink,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 12),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
           ),
         ),
       ),
@@ -102,13 +105,15 @@ class StudioScreen extends StatelessWidget {
       ),
       ColorRibbon(state.palette, height: 92),
       const SizedBox(height: 16),
-      Row(
+      Wrap(
+        spacing: 12,
+        runSpacing: 8,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           StudioBadge(
             '${requiredPairs.where((r) => r.passes(state.palette)).length} / 7 PAIRS PASS',
             good: exportable(state.palette),
           ),
-          const Spacer(),
           Text(
             state.dirty ? 'UNSAVED DRAFT' : 'REVISION ${state.revision}',
             style: const TextStyle(

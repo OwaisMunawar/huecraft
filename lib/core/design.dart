@@ -46,13 +46,14 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     margin: const EdgeInsets.only(bottom: 18),
-    padding: const EdgeInsets.all(20),
-    decoration: BoxDecoration(
+    child: Material(
       color: color,
-      borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: const Color(0xFFE0E4DC)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: const BorderSide(color: Color(0xFFE0E4DC)),
+      ),
+      child: Padding(padding: const EdgeInsets.all(20), child: child),
     ),
-    child: child,
   );
 }
 

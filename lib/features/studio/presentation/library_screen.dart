@@ -164,7 +164,10 @@ class LibraryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Wrap(
+                spacing: 12,
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
                     'Revision ${revision.revision}',
@@ -173,7 +176,6 @@ class LibraryScreen extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  const Spacer(),
                   if (revision.revision == state.revision)
                     const StudioBadge('CURRENT'),
                 ],

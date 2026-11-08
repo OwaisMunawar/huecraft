@@ -50,32 +50,49 @@ class _StudioShellState extends State<StudioShell> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(22, 12, 22, 16),
-                child: Row(
+                child: Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 12,
+                  runSpacing: 10,
                   children: [
-                    Container(
-                      width: 28,
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: teal,
-                        borderRadius: BorderRadius.circular(9),
-                      ),
-                      child: const Icon(
-                        Icons.blur_on_rounded,
-                        color: lime,
-                        size: 22,
+                    SizedBox(
+                      width: 180,
+                      height: 34,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 28,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              color: teal,
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+                            child: const Icon(
+                              Icons.blur_on_rounded,
+                              color: lime,
+                              size: 22,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          const Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'huecraft',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  color: ink,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: -1.3,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'huecraft',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: ink,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -1.3,
-                      ),
-                    ),
-                    const Spacer(),
                     const StudioBadge('LOCAL STUDIO'),
                   ],
                 ),
