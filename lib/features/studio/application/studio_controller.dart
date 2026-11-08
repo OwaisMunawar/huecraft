@@ -242,18 +242,23 @@ final class StudioController {
 
   Future<void> reload() async {
     if (_state.busy) return;
-    final saved = await repository.load();
-    _epoch++;
-    _emit(
-      _state.copy(
-        palette: saved.palette,
-        revision: saved.revision,
-        dirty: false,
-        history: await repository.history(),
-        locks: const {},
-        message: 'Loaded the latest saved revision.',
-      ),
-    );
+    try {
+      final saved = await repository.load();
+      final history = await repository.history();
+      _epoch++;
+      _emit(
+        _state.copy(
+          palette: saved.palette,
+          revision: saved.revision,
+          dirty: false,
+          history: history,
+          locks: const {},
+          message: 'Loaded the latest saved revision.',
+        ),
+      );
+    } on StudioFailure catch (error) {
+      _emit(_state.copy(message: error.message));
+    }
   }
 
   String export({bool css = false}) {

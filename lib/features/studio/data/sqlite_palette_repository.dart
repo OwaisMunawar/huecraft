@@ -64,8 +64,24 @@ final class SqlitePaletteRepository implements PaletteRepository {
     }
   }
 
+  Future<T> _read<T>(Future<T> Function() operation) async {
+    try {
+      return await operation();
+    } on DatabaseException {
+      throw const StudioFailure(
+        FailureCode.storage,
+        'The saved palette could not be read. No data was reset.',
+      );
+    } on StudioFailure {
+      throw const StudioFailure(
+        FailureCode.storage,
+        'The saved palette could not be read. No data was reset.',
+      );
+    }
+  }
+
   @override
-  Future<SavedRevision> load() async {
+  Future<SavedRevision> load() => _read(() async {
     final rows = await database.rawQuery(
       'SELECT r.* FROM revisions r JOIN head h ON h.revision=r.revision WHERE h.id=1',
     );
@@ -76,7 +92,7 @@ final class SqlitePaletteRepository implements PaletteRepository {
       );
     }
     return _decode(rows.single);
-  }
+  });
 
   @override
   Future<SavedRevision> save(
@@ -139,10 +155,12 @@ final class SqlitePaletteRepository implements PaletteRepository {
   }
 
   @override
-  Future<List<SavedRevision>> history() async => (await database.query(
-    'revisions',
-    orderBy: 'revision DESC',
-  )).map(_decode).toList(growable: false);
+  Future<List<SavedRevision>> history() => _read(
+    () async => (await database.query(
+      'revisions',
+      orderBy: 'revision DESC',
+    )).map(_decode).toList(growable: false),
+  );
   @override
   Future<void> close() => database.close();
 }
