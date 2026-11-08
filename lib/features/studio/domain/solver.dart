@@ -86,9 +86,20 @@ List<PaletteOption> proposalOptions(
 ) {
   final options = <PaletteOption>[];
   final seen = <String>{};
+  int chroma(ColorValue color) {
+    final channels = [color.red, color.green, color.blue]..sort();
+    return channels.last - channels.first;
+  }
+
+  final alternatives =
+      catalog.colors.where((c) => c != start[ColorRole.accent]).toList()
+        ..sort((a, b) {
+          final saturation = chroma(b).compareTo(chroma(a));
+          return saturation == 0 ? a.rgb.compareTo(b.rgb) : saturation;
+        });
   final accents = locked.contains(ColorRole.accent)
       ? [start[ColorRole.accent]]
-      : catalog.colors;
+      : [start[ColorRole.accent], ...alternatives];
   for (final accent in accents) {
     try {
       final palette = repairPalette(
